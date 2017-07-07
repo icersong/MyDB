@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 from distutils.core import setup
 from setuptools import find_packages
-# from ??? import find_package_data
 
 
 PACKAGE = "MyDB"
@@ -15,6 +15,7 @@ URL = ""
 #  VERSION = __import__(PACKAGE).__version__
 VERSION = '1.5'
 
+print os.system('git status')
 #  print find_packages(exclude=["tests.*", "tests", "scripts"])
 setup(
     name=NAME,
