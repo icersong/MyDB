@@ -1,2 +1,2 @@
 # MyDB
-Simple MySQLdb Extensions and Simple sql maker
+a simple mysql-python extends and a simple SQL maker
