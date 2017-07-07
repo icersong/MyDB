@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-import os
+import re, sys
+import subprocess
 from distutils.core import setup
 from setuptools import find_packages
 
@@ -13,9 +13,34 @@ AUTHOR = "icersong"
 AUTHOR_EMAIL = "icersong@gmail.com"
 URL = ""
 #  VERSION = __import__(PACKAGE).__version__
-VERSION = '1.5'
 
-print os.system('git status')
+
+def make_version():
+    #  p = subprocess.Popen(['git', 'branch', '-vv'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(['git', 'log', '--oneline', '--graph', '--decorate', '-n1'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    if err or not out:
+        print err
+        sys.exit()
+    info = out.split('\n')[0]
+    m = re.match('.*\(HEAD, tag: (?P<tag>[\w.!@#$%&*-+/]+)[^\(\)]*\).*$', info)
+    if not m:
+        print 'Current is not branche tag.'
+        print 'Please do command:'
+        print '    $ git tag <tagname>'
+        print '    $ git checkout <tagname>'
+        sys.exit()
+    #  print m.groupdict()
+    with open('VERSION', 'wb') as fp:
+        fp.write(m.groupdict()['tag'])
+
+
+if [x for x in ['bdist', 'sdist', 'bdist_egg', 'bdist_whl', 'upload'] if x in sys.argv]:
+    make_version()
+
+with open('VERSION', 'rb') as fp:
+    VERSION = fp.read().split('\n')[0].strip()
+
 #  print find_packages(exclude=["tests.*", "tests", "scripts"])
 setup(
     name=NAME,
