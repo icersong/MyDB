@@ -13,7 +13,7 @@ AUTHOR = "icersong"
 AUTHOR_EMAIL = "icersong@gmail.com"
 URL = ""
 #  VERSION = __import__(PACKAGE).__version__
-VERSION = '1.4'
+VERSION = '1.5'
 
 #  print find_packages(exclude=["tests.*", "tests", "scripts"])
 setup(
@@ -26,11 +26,11 @@ setup(
     license="GPL",
     url=URL,
     packages=find_packages(exclude=["tests.*", "tests", "scripts"]),
-    install_requires=['mysql-python'],
-    #  package_data=find_package_data(
-    #      PACKAGE,
-    #      only_in_packages=False
-    #  ),
+    install_requires=['mysql-python', 'som-common'],
+    package_data={
+        '': ['*.txt', '*.rst', '*.md'],
+        'MyDB': ['*.xml'],
+    },
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
